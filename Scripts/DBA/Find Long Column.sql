@@ -1,0 +1,5 @@
+﻿-- Admin User
+SELECT *
+FROM DBA_TAB_COLS
+WHERE data_type IN ('LONG RAW', 'LONG')
+--AND OWNER NOT IN ('SYS','SYSTEM','WMSYS','OUTLN');
