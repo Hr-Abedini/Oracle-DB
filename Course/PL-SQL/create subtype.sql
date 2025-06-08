@@ -1,0 +1,10 @@
+﻿DECLARE
+   SUBTYPE tinyint is PLS_INTEGER range 0..255;
+     var_x    tinyint;
+BEGIN
+   var_x := 255;
+   DBMS_OUTPUT.PUT_LINE(var_x);
+EXCEPTION 
+    WHEN OTHERS THEN
+DBMS_OUTPUT.PUT_LINE(SQLERRM );
+END;

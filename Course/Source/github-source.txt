@@ -1,0 +1,4 @@
+https://github.com/oracle-samples/db-sample-schemas/releases/tag/v12.2.0.1
+https://github.com/oracle-samples/db-sample-schemas/releases/tag/v23.3
+--------------------------------------------------------------------------------------
+https://github.com/bbrumm/databasestar/blob/main/sample_databases/oracle_hr

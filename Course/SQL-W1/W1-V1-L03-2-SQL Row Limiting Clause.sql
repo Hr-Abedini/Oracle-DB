@@ -1,0 +1,169 @@
+------------------------------------------------ SQL Row Limiting Clause
+--**********************************************
+/*
+SELECT …
+FROM …
+[ WHERE … ]
+[ ORDER BY … ]
+[OFFSET offset { ROW | ROWS }]
+[FETCH { FIRST | NEXT } [{ row_count | percent PERCENT}] { ROW | ROWS }
+{ ONLY | WITH TIES }]
+*/
+------------------------------------------------
+-- Skip 10 rows
+SELECT EMPLOYEE_ID,
+	   FIRST_NAME
+FROM EMPLOYEES
+ORDER BY EMPLOYEE_ID
+OFFSET 10 ROWS;	--[rows/row]
+
+------------------------------------------------ First Rows
+--> 100..104
+-- First
+SELECT EMPLOYEE_ID,
+	   FIRST_NAME
+FROM EMPLOYEES
+ORDER BY EMPLOYEE_ID
+FETCH FIRST 5 ROWS ONLY;
+
+
+-- Next
+SELECT EMPLOYEE_ID,
+	   FIRST_NAME
+FROM EMPLOYEES
+ORDER BY EMPLOYEE_ID
+FETCH NEXT 5 ROWS ONLY;
+
+------------------------------------------------ Next Rows
+--> 105..109
+SELECT EMPLOYEE_ID,
+	   FIRST_NAME
+FROM EMPLOYEES
+ORDER BY EMPLOYEE_ID
+OFFSET 5 ROWS
+FETCH FIRST 5 ROWS ONLY;
+
+
+SELECT EMPLOYEE_ID,
+	   FIRST_NAME
+FROM EMPLOYEES
+ORDER BY EMPLOYEE_ID
+OFFSET 5 ROWS
+FETCH NEXT 5 ROWS ONLY;
+
+------------------------- ***
+/*
+-->107
+SELECT Count(*)
+  FROM EMPLOYEES
+-- per page=20
+-- page no =3
+SELECT EMPLOYEE_ID,
+	   FIRST_NAME
+  FROM EMPLOYEES
+  ORDER BY EMPLOYEE_ID
+OFFSET ((3-1)*20) ROWS
+FETCH NEXT 20 ROWS ONLY;
+*/
+--> 110..114
+SELECT EMPLOYEE_ID,
+	   FIRST_NAME
+FROM EMPLOYEES
+ORDER BY EMPLOYEE_ID
+OFFSET 10 ROWS
+FETCH NEXT 5 ROWS ONLY;
+
+--> 100..104
+SELECT EMPLOYEE_ID,
+	   FIRST_NAME
+FROM EMPLOYEES
+ORDER BY EMPLOYEE_ID
+-- OFFSET 5 ROWS
+FETCH NEXT 5 ROWS ONLY;
+/*
+   *************************************************
+*/
+------------------------------------------------ With Ties
+--> 14 rows
+SELECT E.EMPLOYEE_ID,
+	   E.FIRST_NAME,
+	   E.MANAGER_ID
+FROM EMPLOYEES E
+WHERE E.MANAGER_ID = 100
+ORDER BY E.MANAGER_ID;
+
+--> 14 Rows -- ORDER BY  e.manager_id -- FETCH Next 5 ROWS
+SELECT E.EMPLOYEE_ID,
+	   E.FIRST_NAME,
+	   E.MANAGER_ID
+FROM EMPLOYEES E
+ORDER BY E.MANAGER_ID
+FETCH NEXT 5 ROWS WITH TIES;
+
+--> 5 rows -- ORDER BY  e.manager_id, e.employee_id
+SELECT E.EMPLOYEE_ID,
+	   E.FIRST_NAME,
+	   E.MANAGER_ID
+FROM EMPLOYEES E
+ORDER BY E.MANAGER_ID,
+		 E.EMPLOYEE_ID
+FETCH NEXT 5 ROWS WITH TIES;
+
+--> 9 rows --  14 - (offset = 5) 
+SELECT E.FIRST_NAME,
+	   E.MANAGER_ID
+FROM EMPLOYEES E
+ORDER BY E.MANAGER_ID
+OFFSET 5 ROWS
+FETCH NEXT 5 ROWS WITH TIES;
+------------------------------------------------ Percent
+-- Total records: 107 
+-- 10% => 10.7 => 11
+--> 11 Rows
+SELECT EMPLOYEE_ID,
+	   FIRST_NAME
+FROM EMPLOYEES
+ORDER BY EMPLOYEE_ID
+FETCH FIRST 10 PERCENT ROWS ONLY;
+
+
+-- OFFSET 7 ROWS -> 107 -7 =100 => 100 * 0.1 =10  (X)
+-- 107 * 0.1 = 10.7 => 11
+--> 11 rows 
+SELECT EMPLOYEE_ID,
+	   FIRST_NAME
+FROM EMPLOYEES
+ORDER BY EMPLOYEE_ID
+OFFSET 7 ROWS
+FETCH FIRST 10 PERCENT ROWS ONLY;
+
+
+-- OFFSET 90 ROWS
+--> 11 rows
+SELECT EMPLOYEE_ID,
+	   FIRST_NAME
+FROM EMPLOYEES
+ORDER BY EMPLOYEE_ID
+OFFSET 90 ROWS
+FETCH FIRST 10 PERCENT ROWS ONLY;
+
+------------------------------------------------ OFFSET  x > rowcount  
+--> null
+SELECT EMPLOYEE_ID,
+	   FIRST_NAME
+FROM EMPLOYEES
+ORDER BY EMPLOYEE_ID
+OFFSET 900 ROWS
+FETCH FIRST 10 PERCENT ROWS ONLY;
+
+------------------------------------------------ ROWNUM
+SELECT *
+FROM (
+	SELECT ROWNUM ROW_NO,
+		   EMPLOYEE_ID,
+		   FIRST_NAME
+	FROM EMPLOYEES
+	ORDER BY EMPLOYEE_ID
+)
+WHERE row_no <= 5;
+
