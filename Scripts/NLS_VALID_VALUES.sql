@@ -1,4 +1,6 @@
-﻿SELECT PARAMETER,
+import oracledb
+
+SELECT PARAMETER,
 	   COUNT(*) total,
 	   SUM(DECODE(ISDEPRECATED, 'TRUE', 1, 0)) is_deprecated,
 	   SUM(DECODE(ISDEPRECATED, 'FALSE', 1, 0)) is_not_deprecated

@@ -1,0 +1,56 @@
+cells:
+  - kind: 2
+    value: "SELECT PARAMETER,\r
+
+      \t   COUNT(*) total,\r
+
+      \t   SUM(DECODE(ISDEPRECATED, 'TRUE', 1, 0)) is_deprecated,\r
+
+      \t   SUM(DECODE(ISDEPRECATED, 'FALSE', 1, 0)) is_not_deprecated\r
+
+      FROM V$NLS_VALID_VALUES\r
+
+      GROUP BY PARAMETER;"
+    languageId: oracle-sql
+  - kind: 1
+    value: "#### LANGUAGE"
+    languageId: markdown
+  - kind: 2
+    value: "SELECT *\r
+
+      FROM V$NLS_VALID_VALUES\r
+
+      WHERE PARAMETER = 'LANGUAGE';\r
+
+      \r\n"
+    languageId: oracle-sql
+  - kind: 1
+    value: "#### TERRITORY"
+    languageId: markdown
+  - kind: 2
+    value: "SELECT *\r
+
+      FROM V$NLS_VALID_VALUES\r
+
+      WHERE PARAMETER = 'TERRITORY';"
+    languageId: oracle-sql
+  - kind: 1
+    value: "#### CHARACTERSET"
+    languageId: markdown
+  - kind: 2
+    value: "SELECT *\r
+
+      FROM V$NLS_VALID_VALUES\r
+
+      WHERE PARAMETER = 'CHARACTERSET';"
+    languageId: oracle-sql
+  - kind: 1
+    value: "#### SORT"
+    languageId: markdown
+  - kind: 2
+    value: "SELECT *\r
+
+      FROM V$NLS_VALID_VALUES\r
+
+      WHERE PARAMETER = 'SORT';"
+    languageId: oracle-sql
