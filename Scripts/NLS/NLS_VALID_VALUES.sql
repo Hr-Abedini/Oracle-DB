@@ -8,12 +8,14 @@ GROUP BY PARAMETER;
 -------------------------------------------------- LANGUAGE
 SELECT *
 FROM V$NLS_VALID_VALUES
-WHERE PARAMETER = 'LANGUAGE';
+WHERE PARAMETER = 'LANGUAGE'
+   AND VALUE = 'PERSIAN';
 
 -------------------------------------------------- TERRITORY
 SELECT *
 FROM V$NLS_VALID_VALUES
-WHERE PARAMETER = 'TERRITORY';
+WHERE PARAMETER = 'TERRITORY'
+   AND VALUE = 'IRAN';
 
 -------------------------------------------------- CHARACTERSET
 SELECT *
