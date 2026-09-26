@@ -46,8 +46,8 @@ RR Date Format:
 -----------------------------------------------------------------
 			|		[S] 0..49		|		[S] 50..99			|
 -----------------------------------------------------------------
-[C] 0..49	|	current century		|		century - 1			|
-[C] 0..50	|	century + 1			|		current century		|
+[C]  0..49	|	current century		|		century - 1			|
+[C] 50..99	|	century + 1			|		current century		|
 -----------------------------------------------------------------	     
 
 
@@ -69,7 +69,10 @@ CENTURY  YEAR  MONTH   DAY  HOUR  MINUTE  SECOND
 ---------------------------------------------------------------------------
 */
 
-
+select * 
+from nls_database_parameters
+where parameter like '%TIME%'
+	or parameter like '%DATE%';
 
 ------------------------------------------------ Using the SYSDATE Function
 /* 
@@ -97,9 +100,10 @@ FROM DUAL;
 ------------------------------------------------ Arithmetic with Dates
 -- date (+/-) number 	-> Date				-> Adds/Subtracts a number of days to a date
 -- date + number/24 	-> Date 			-> Adds a number of hours to a date
--- date – date      	-> Number of days 	-> Subtracts one date from another
+-- date - date     		-> Number of days 	-> Subtracts one date from another
 SELECT LAST_NAME,
-	   (SYSDATE - HIRE_DATE) / 7 AS WEEKS,
+	   HIRE_DATE,
+	   (SYSDATE - HIRE_DATE) / 7 AS "WEEKS(current date)",
 	   (TO_DATE('20-AUG-12') - HIRE_DATE) / 7 AS WEEKS
 FROM EMPLOYEES
 WHERE DEPARTMENT_ID = 90;

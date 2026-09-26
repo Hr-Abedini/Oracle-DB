@@ -1,10 +1,10 @@
 ------------------------------------------------ SQL Row Limiting Clause
 --**********************************************
 /*
-SELECT …
-FROM …
-[ WHERE … ]
-[ ORDER BY … ]
+SELECT ï¿½
+FROM ï¿½
+[ WHERE ï¿½ ]
+[ ORDER BY ï¿½ ]
 [OFFSET offset { ROW | ROWS }]
 [FETCH { FIRST | NEXT } [{ row_count | percent PERCENT}] { ROW | ROWS }
 { ONLY | WITH TIES }]
@@ -53,18 +53,21 @@ FETCH NEXT 5 ROWS ONLY;
 
 ------------------------- ***
 /*
--->107
+--> count = 107
 SELECT Count(*)
-  FROM EMPLOYEES
+FROM EMPLOYEES
+
 -- per page=20
 -- page no =3
+-- => 140..159
 SELECT EMPLOYEE_ID,
 	   FIRST_NAME
-  FROM EMPLOYEES
-  ORDER BY EMPLOYEE_ID
+FROM EMPLOYEES
+ORDER BY EMPLOYEE_ID
 OFFSET ((3-1)*20) ROWS
 FETCH NEXT 20 ROWS ONLY;
 */
+
 --> 110..114
 SELECT EMPLOYEE_ID,
 	   FIRST_NAME
@@ -93,6 +96,12 @@ WHERE E.MANAGER_ID = 100
 ORDER BY E.MANAGER_ID;
 
 --> 14 Rows -- ORDER BY  e.manager_id -- FETCH Next 5 ROWS
+/*
+SELECT COUNT(*) 
+FROM EMPLOYEES
+WHERE MANAGER_ID = 100;
+*/
+
 SELECT E.EMPLOYEE_ID,
 	   E.FIRST_NAME,
 	   E.MANAGER_ID
@@ -127,7 +136,7 @@ ORDER BY EMPLOYEE_ID
 FETCH FIRST 10 PERCENT ROWS ONLY;
 
 
--- OFFSET 7 ROWS -> 107 -7 =100 => 100 * 0.1 =10  (X)
+-- OFFSET 7 ROWS -> 107-7=100 => 100 * 0.1 =10  (X)
 -- 107 * 0.1 = 10.7 => 11
 --> 11 rows 
 SELECT EMPLOYEE_ID,
@@ -145,6 +154,16 @@ SELECT EMPLOYEE_ID,
 FROM EMPLOYEES
 ORDER BY EMPLOYEE_ID
 OFFSET 90 ROWS
+FETCH FIRST 10 PERCENT ROWS ONLY;
+
+------------------------------------------------ 
+-- OFFSET => 107 - 11 + 1 = 97  
+--> 10 rows
+SELECT EMPLOYEE_ID,
+	   FIRST_NAME
+FROM EMPLOYEES
+ORDER BY EMPLOYEE_ID
+OFFSET 97 ROWS
 FETCH FIRST 10 PERCENT ROWS ONLY;
 
 ------------------------------------------------ OFFSET  x > rowcount  

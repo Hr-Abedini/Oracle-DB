@@ -96,6 +96,7 @@ character pairs: [ ], { }, ( ), or < >.
 SELECT DEPARTMENT_NAME || q'[ Department's Manager Id: ]' || MANAGER_ID AS "Department and Manager"
 FROM DEPARTMENTS;
 
+
 ------------------------------------------------ Duplicate Rows
 SELECT DEPARTMENT_ID
 FROM EMPLOYEES;
@@ -106,9 +107,11 @@ FROM EMPLOYEES;
 ------------------------------------------------ Displaying Table Structure
 -- DESC[RIBE] tablename 
 -- In Command windows
+DESC EMPLOYEES
 DESCRIBE EMPLOYEES
 ------------------------------------------------ Quiz 
--- err: Yearly Sal
+-- ORA-00923: FROM keyword not found where expected
+-- => Yearly Sal
 /*
 SELECT FIRST_NAME,
 	   LAST_NAME,
@@ -130,6 +133,9 @@ SELECT FIRST_NAME,
 FROM EMPLOYEES;
 
 /*
+-- ORA-00923: FROM keyword not found where expected
+-- => Yearly Sal
+
 SELECT FIRST_NAME + LAST_NAME AS name,
 	   JOB_ID,
 	   SALARY * 12 yearly sal

@@ -9,10 +9,21 @@ SELECT *
 FROM ALL_OBJECTS;
 --============================================================ Tables
 SELECT *
+FROM DBA_ALL_TABLES;
+
+SELECT *
+FROM DBA_TABLES;
+
+
+SELECT *
 FROM ALL_ALL_TABLES;
 
 SELECT *
 FROM ALL_TABLES;
+
+
+SELECT *
+FROM USER_ALL_TABLES;
 
 SELECT *
 FROM USER_TABLES;
